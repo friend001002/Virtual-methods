@@ -26,7 +26,8 @@ class Derived : public Base
     cout << "Derived A\n";
   }
 
-  virtual void B()
+  // Not just adding new virtual B(), but actually orevviding old B()
+  virtual void B() override
   {
     cout << "Derived B\n";
   }
