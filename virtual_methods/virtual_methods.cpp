@@ -2,6 +2,8 @@
 
 using namespace std;
 
+int override = 7;
+
 class Base
 {
   public:
@@ -11,13 +13,20 @@ class Base
     cout << "Base A\n";
   }
 
-  virtual void B()
+  void B()
+  {
+    this->Do_B();
+  }
+
+  private:
+
+  virtual void Do_B()
   {
     cout << "Base B\n";
   }
 };
 
-class Derived : public Base
+class Derived final : public Base
 {
   public:
 
@@ -26,8 +35,15 @@ class Derived : public Base
     cout << "Derived A\n";
   }
 
+  void B()
+  {
+    this->Do_B();
+  }
+
+  private:
+
   // Not just adding new virtual B(), but actually orerriding old B().
-  virtual void B() override
+  void Do_B() override
   {
     cout << "Derived B\n";
   }
@@ -48,6 +64,7 @@ class Derived2 : public Base
 void Print_ptr(Base *p)
 {
   cout << "Accessing through pointer...\n";
+
   p->A();
   p->B();
 }
@@ -68,12 +85,12 @@ void Print(Base b)
   b.B();
 }
 
-void Print(Derived b)
+void Print(Derived d)
 {
   cout << "Derived print:\n";
 
-  b.A();
-  b.B();
+  d.A();
+  d.B();
 }
 
 template<class T>
